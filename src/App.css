@@ -1,0 +1,24 @@
+/* 전체 레이아웃 */
+.app {
+  font-family: "Pretendard", sans-serif;
+  background-color: linear-gradient(
+    180deg,
+    #f9ecec 0%,
+    #f0d9da 40%,
+    #c8d9eb 80%,
+    #ecf2f9 100%
+  );
+  /* color: white; */
+  min-height: 100vh;
+}
+
+/* 페이지 내용 */
+/* .app__content {
+  padding: 2rem;
+} */
+
+/* 홈 화면 */
+.home {
+  text-align: center;
+  margin-top: 3rem;
+}
