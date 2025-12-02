@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Foodpage.css";
 
-const KAKAO_REST_API_KEY = "0838cf7b8fa1fc663d1b9f1d667ee216";
-const KAKAO_JS_KEY = "7878d3773ee1aa648837e884de17feab";
+const KAKAO_REST_API_KEY = "f901b87a9dc464edc2a4cad32e786602";
+const KAKAO_JS_KEY = "bceccd594bb478b5533d7d2ec63f8bb0";
 const KAKAO_URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
 
 export default function Foodpage() {
