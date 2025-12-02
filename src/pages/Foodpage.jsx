@@ -20,22 +20,9 @@ export default function Foodpage() {
 
   // 지도 초기화
   useEffect(() => {
-    const existingScript = document.querySelector("#kakao-map-sdk");
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.id = "kakao-map-sdk";
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`;
-      script.async = true;
-      document.head.appendChild(script);
-      script.onload = () => initMap();
-    } else {
-      if (window.kakao) {
-        initMap();
-      }
-    }
-
-    function initMap() {
+    const initMap = () => {
       if (!window.kakao || !mapRef.current) return;
+
       window.kakao.maps.load(() => {
         const container = mapRef.current;
         if (!container) return;
@@ -46,7 +33,31 @@ export default function Foodpage() {
         };
         mapInstance.current = new window.kakao.maps.Map(container, options);
       });
+    };
+
+    const existingScript = document.querySelector("#kakao-map-sdk");
+
+    // 스크립트가 아직 없는 경우: 새로 추가하고 onload에서 initMap 실행
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = "kakao-map-sdk";
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`;
+      script.async = true;
+      script.onload = initMap;
+      document.head.appendChild(script);
+      return;
     }
+
+    // 스크립트는 있지만 window.kakao가 아직 준비 전일 수 있으므로 onload 보장
+    if (!window.kakao) {
+      existingScript.addEventListener("load", initMap);
+      return () => {
+        existingScript.removeEventListener("load", initMap);
+      };
+    }
+
+    // 이미 SDK가 로드된 경우 바로 초기화
+    initMap();
   }, []);
 
   const handleAddLocation = () => {
